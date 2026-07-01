@@ -122,7 +122,8 @@ def check_dangerous_commands(text, source_label):
             if _is_in_code_block(text, m.start()):
                 continue
             # 检查 pipe 后是否是安全的数据处理工具
-            after_pipe = text[m.end():m.end()+30].strip().split()[0] if m.group().endswith('|') else ''
+            after_pipe_raw = text[m.end():m.end()+30].strip() if m.group().endswith('|') else ''
+            after_pipe = after_pipe_raw.split()[0] if after_pipe_raw else ''
             if after_pipe and after_pipe in SAFE_PIPE_TARGETS:
                 continue
             if after_pipe.startswith('/'):
